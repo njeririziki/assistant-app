@@ -16,45 +16,40 @@ const addNumber=(number)=>{
    currentoperand=  currentoperand.toString() + number.toString();
 }
 
-const updateDisplay=()=>{
-   input.innerText= previousoperand.toLocaleString("en") ;
-   output.innerText= currentoperand;
-}
 
 const chooseOperation =(operand)=>{
  if (currentoperand === '') return
 operation = operand;
-previousoperand = currentoperand;
-currentoperand = '';
+// 
+// currentoperand = '';
 }
 
 const compute=()=>{
     let computation
-    const current = parseFloat(currentoperand)
-    const prev = parseFloat(previousoperand)
-    if (isNaN(prev) || isNaN(current)) return
- switch(operation){
-     case '+':
-        computation=prev+current
-         break;
-     case '-':
-        computation=prev-current
-        break;
-     case '×':
-      computation=prev*current
-        break;
-    case '÷':
-        computation=prev/current
-      break;
-      default:
- }
- previousoperand = currentoperand;
-  currentoperand= computation;
-  operation = undefined;
-   previousoperand = ''
+    previousoperand = currentoperand;
+    // const current = parseFloat(currentoperand)
+    // const prev = parseFloat(previousoperand)
+    console.log(`The question is ${previousoperand}`)
+    if (previousoperand != '') {
+        computation= eval(previousoperand);
+        currentoperand= computation;
+        return console.log(`The answer is ${computation}`)
+    } else{
+        return console.log(`not a valid argument `)
+    }; 
+   
 }
+ const cleanDisplay=(ans) =>{
+    const res = parseFloat(ans.split('.')[0]);
+     const result = res.toLocaleString("en") ;
+    return result;
+ }
 
 
+const updateDisplay=()=>{
+   input.innerText= previousoperand ;
+   output.innerText= currentoperand.toLocaleString("en");
+}
 
 const clear =()=>{
      currentoperand = '';
@@ -76,7 +71,7 @@ numberBtns.forEach(button=>{
 operandBtns.forEach(button=>{
     button.addEventListener('click', ()=>{
         addNumber(button.innerText)
-       chooseOperation(button.innerText);
+       chooseOperation(button.id);
        updateDisplay()
     })
 })
